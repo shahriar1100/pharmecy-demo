@@ -144,8 +144,12 @@ img { display: block; max-width: 100%; }
 .contact-panel::after { content: ""; position: absolute; width: 360px; height: 360px; border: 1px solid rgba(255,255,255,.13); border-radius: 50%; right: -100px; bottom: -220px; box-shadow: 0 0 0 55px rgba(255,255,255,.025); }
 .section-kicker.light { color: #bbddd2; }
 .contact-panel p { color: #c8ded7; max-width: 480px; }
+.owner-line { display: flex; align-items: center; gap: 9px; margin-top: 20px; font-weight: 600; }
+.service-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
+.service-list span { display: inline-flex; align-items: center; gap: 5px; padding: 6px 9px; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.07); border-radius: 999px; color: #d9ebe5; font-size: 12px; }
 .contact-actions { display: grid; gap: 12px; position: relative; z-index: 2; }
-.contact-card { min-height: 76px; padding: 15px 18px; border: 1px solid rgba(255,255,255,.16); border-radius: 17px; background: rgba(255,255,255,.08); color: #fff; display: flex; align-items: center; gap: 14px; text-align: left; }
+.contact-card { min-height: 76px; padding: 15px 18px; border: 1px solid rgba(255,255,255,.16); border-radius: 17px; background: rgba(255,255,255,.08); color: #fff; display: flex; align-items: center; gap: 14px; text-align: left; text-decoration: none; transition: background .2s, transform .2s; }
+a.contact-card:hover { background: rgba(255,255,255,.14); transform: translateY(-2px); }
 .contact-card > svg { padding: 8px; width: 40px; height: 40px; border-radius: 12px; background: rgba(255,255,255,.12); }
 .contact-card span { display: flex; flex-direction: column; }
 .contact-card small { color: #b8d5cb; }
@@ -157,7 +161,10 @@ footer { background: #edf5f1; padding: 60px 0 25px; }
 .footer-grid > div:not(:first-child) { display: flex; flex-direction: column; gap: 9px; }
 .footer-grid strong { margin-bottom: 6px; }
 .footer-grid button { border: 0; padding: 2px 0; background: transparent; text-align: left; color: var(--muted); cursor: pointer; }
-.footer-grid span { color: var(--muted); }
+.footer-grid span, .footer-grid a { color: var(--muted); }
+.footer-grid a { text-decoration: none; }
+.footer-grid a:hover { color: var(--teal); }
+.footer-owner { display: block; margin-top: 10px; font-weight: 600; color: var(--teal) !important; }
 .footer-bottom { border-top: 1px solid #d8e6df; margin-top: 45px; padding-top: 22px; display: flex; justify-content: space-between; gap: 18px; color: var(--muted); font-size: 13px; }
 
 .dialog-backdrop, .drawer-backdrop { position: fixed; inset: 0; z-index: 80; background: rgba(8, 29, 25, .62); backdrop-filter: blur(6px); padding: 24px; display: grid; place-items: center; }

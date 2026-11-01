@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { ArrowRight, Baby, Check, ChevronDown, Heart, Menu, MessageCircle, Minus, PackageCheck, Phone, Plus, Search, ShoppingBag, Sparkles, Trash2, X } from 'lucide-react'
+import { ArrowRight, Check, ChevronDown, Heart, MapPin, Menu, MessageCircle, Minus, PackageCheck, Phone, Plus, Search, ShoppingBag, Sparkles, Trash2, UserRound, X } from 'lucide-react'
 import { CartProvider, useCart } from './context/CartContext'
 import { categories, categoryLabel, products } from './data/products'
 import { store } from './config/store'
@@ -192,11 +192,12 @@ function FAQ() {
 }
 
 function ContactSection() {
-  return <section id="contact" className="contact-section section-anchor"><div className="container"><Reveal className="contact-panel"><div><span className="section-kicker light">যোগাযোগ</span><h2>কোনো পণ্য সম্পর্কে<br />জানতে চান?</h2><p>পণ্যের বর্তমান মূল্য, প্রাপ্যতা ও ডেলিভারি সম্পর্কে স্টোরের সঙ্গে নিশ্চিত করুন।</p></div><div className="contact-actions"><button className="contact-card" disabled={!store.phone}><Phone size={22} /><span><small>ফোন</small><strong>{store.phone || 'নম্বর এখনো যোগ করা হয়নি'}</strong></span></button><button className="contact-card" disabled={!store.whatsapp}><MessageCircle size={22} /><span><small>WhatsApp</small><strong>{store.whatsapp || 'নম্বর এখনো যোগ করা হয়নি'}</strong></span></button></div></Reveal></div></section>
+  const phoneHref = (number) => `tel:${number.replace(/[^\d+]/g, '')}`
+  return <section id="contact" className="contact-section section-anchor"><div className="container"><Reveal className="contact-panel"><div><span className="section-kicker light">যোগাযোগ</span><h2>কোনো পণ্য সম্পর্কে<br />জানতে চান?</h2><p>পণ্যের বর্তমান মূল্য, প্রাপ্যতা ও ডেলিভারি সম্পর্কে সরাসরি {store.name}-এর সঙ্গে নিশ্চিত করুন।</p><div className="owner-line"><UserRound size={18} /><span>{store.ownerName}</span></div><div className="service-list">{store.services.map((service) => <span key={service}><Check size={14} />{service}</span>)}</div></div><div className="contact-actions"><a className="contact-card" href={phoneHref(store.phone)}><Phone size={22} /><span><small>প্রধান ফোন</small><strong>{store.phone}</strong></span></a><a className="contact-card" href={phoneHref(store.phoneSecondary)}><Phone size={22} /><span><small>বিকল্প ফোন</small><strong>{store.phoneSecondary}</strong></span></a><div className="contact-card address-card"><MapPin size={22} /><span><small>ঠিকানা</small><strong>{store.address}</strong></span></div></div></Reveal></div></section>
 }
 
 function Footer() {
-  return <footer><div className="container footer-grid"><div><div className="brand footer-brand"><span className="brand-mark"><Heart size={19} /></span><span>{store.name}</span></div><p>ব্যক্তিগত পরিচর্যা, বেবি কেয়ার ও দৈনন্দিন প্রয়োজনের পণ্যের তথ্য দেখার একটি সহজ ঠিকানা।</p></div><div><strong>দ্রুত লিংক</strong><button onClick={() => scrollTo('products')}>পণ্যসমূহ</button><button onClick={() => scrollTo('about')}>আমাদের সম্পর্কে</button><button onClick={() => scrollTo('faq')}>সাধারণ প্রশ্ন</button></div><div><strong>যোগাযোগ</strong><span>{store.phone || 'ফোন নম্বর দেওয়া হয়নি'}</span><span>{store.address || 'ঠিকানা দেওয়া হয়নি'}</span></div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} {store.name}</span><span>ওষুধের বিষয়ে চিকিৎসক বা ফার্মাসিস্টের পরামর্শ নিন।</span></div></footer>
+  return <footer><div className="container footer-grid"><div><div className="brand footer-brand"><span className="brand-mark"><Heart size={19} /></span><span>{store.name}</span></div><p>{store.businessInfo}</p><span className="footer-owner">{store.ownerName}</span></div><div><strong>দ্রুত লিংক</strong><button onClick={() => scrollTo('products')}>পণ্যসমূহ</button><button onClick={() => scrollTo('about')}>আমাদের সম্পর্কে</button><button onClick={() => scrollTo('faq')}>সাধারণ প্রশ্ন</button></div><div><strong>যোগাযোগ</strong><a href={`tel:${store.phone.replace(/[^\d+]/g, '')}`}>{store.phone}</a><a href={`tel:${store.phoneSecondary.replace(/[^\d+]/g, '')}`}>{store.phoneSecondary}</a><span>{store.address}</span></div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} {store.name}</span><span>ওষুধের বিষয়ে চিকিৎসক বা ফার্মাসিস্টের পরামর্শ নিন।</span></div></footer>
 }
 
 function Storefront() {

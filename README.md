@@ -1,4 +1,4 @@
-# আপনার ফার্মেসি
+# নিউ ভূঁইয়া ফার্মেসী
 
 একটি polished, mobile-first Bengali pharmacy and personal-care landing page। প্রকল্পটি React, Vite, Tailwind CSS, Motion এবং Lucide React দিয়ে তৈরি।
 
