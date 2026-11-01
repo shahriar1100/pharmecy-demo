@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.vercel/
+img/
+public/images/payment-qr-original.jpeg
+.env
+.env.*
+!.env.example
+*.local
+npm-debug.log*
+.DS_Store
+Thumbs.db
