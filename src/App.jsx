@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { ArrowRight, Check, ChevronDown, Heart, MapPin, Menu, MessageCircle, Minus, PackageCheck, Phone, Plus, Search, ShoppingBag, Sparkles, Trash2, UserRound, X } from 'lucide-react'
+import { Activity, ArrowRight, Check, ChevronDown, Droplets, Gauge, Heart, MapPin, Menu, MessageCircle, Minus, PackageCheck, Phone, Plus, Search, ShoppingBag, Sparkles, Trash2, UserRound, X } from 'lucide-react'
 import { CartProvider, useCart } from './context/CartContext'
 import { categories, categoryLabel, products } from './data/products'
 import { store } from './config/store'
@@ -68,13 +68,15 @@ function Hero() {
   const reduced = useReducedMotion()
   const item = reduced ? {} : { initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 } }
   return <section id="home" className="hero section-anchor">
+    <div className="hero-blob hero-blob-one" />
+    <div className="hero-blob hero-blob-two" />
     <div className="container hero-grid">
       <motion.div className="hero-copy" initial="initial" animate="animate" transition={{ staggerChildren: .1 }}>
         <motion.div {...item} className="eyebrow"><Sparkles size={15} /> PERSONAL CARE • BABY CARE • EVERYDAY ESSENTIALS</motion.div>
         <motion.h1 {...item}>নিজের ও পরিবারের যত্নে,<br /><span>প্রয়োজনীয় পণ্য এক জায়গায়</span></motion.h1>
         <motion.p {...item}>ব্যক্তিগত পরিচর্যা, বেবি কেয়ার ও দৈনন্দিন প্রয়োজনের পণ্য দেখুন। বিস্তারিত জেনে সহজেই যোগাযোগ করুন।</motion.p>
         <motion.div {...item} className="hero-actions"><button className="btn btn-primary" onClick={() => scrollTo('products')}>পণ্য দেখুন <ArrowRight size={18} /></button><button className="btn btn-secondary" onClick={() => scrollTo('contact')}>যোগাযোগ করুন</button></motion.div>
-        <motion.div {...item} className="hero-note"><span><Check size={15} /> যাচাইকৃত প্যাক তথ্য</span><span><Check size={15} /> স্বচ্ছ যোগাযোগ</span></motion.div>
+        <motion.div {...item} className="hero-note"><span><Check size={15} /> যাচাইকৃত প্যাক তথ্য</span><span><Check size={15} /> স্বচ্ছ যোগাযোগ</span><span><MapPin size={15} /> দক্ষিণ হালিশহর, চট্টগ্রাম</span></motion.div>
       </motion.div>
       <motion.div className="hero-visual" initial={reduced ? false : { opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .55, delay: .15 }} aria-label="নির্বাচিত ব্যক্তিগত ও বেবি কেয়ার পণ্য">
         <div className="hero-orb" />
@@ -86,12 +88,31 @@ function Hero() {
   </section>
 }
 
-const Reveal = ({ children, className = '' }) => <motion.div className={className} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .45 }}>{children}</motion.div>
+function ServiceRibbon() {
+  const reduced = useReducedMotion()
+  const services = [
+    { icon: Activity, label: 'ডায়াবেটিস পরীক্ষা', tone: 'jade' },
+    { icon: Gauge, label: 'প্রেসার মাপা', tone: 'apricot' },
+    { icon: Droplets, label: 'রক্তের গ্রুপ নির্ণয়', tone: 'blue' },
+  ]
+  return <section className="service-ribbon" aria-label="ফার্মেসির স্বাস্থ্যসেবা">
+    <div className="container service-ribbon-inner">
+      <motion.div className="service-ribbon-title" initial={reduced ? false : { opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}><span>স্বাস্থ্যসেবা</span><strong>প্রয়োজনীয় পরীক্ষা,<br />কাছেই</strong></motion.div>
+      <div className="service-items">{services.map(({ icon: Icon, label, tone }, index) => <motion.div className="service-item" key={label} initial={reduced ? false : { opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * .08, type: 'spring', stiffness: 180, damping: 20 }} whileHover={reduced ? {} : { y: -4 }}><span className={`service-icon ${tone}`}><Icon size={21} /></span><strong>{label}</strong><ArrowRight size={16} /></motion.div>)}</div>
+    </div>
+  </section>
+}
 
-function ProductCard({ product, onOpen, onInquiry, onCart }) {
+function Reveal({ children, className = '', delay = 0 }) {
+  const reduced = useReducedMotion()
+  return <motion.div className={className} initial={reduced ? false : { opacity: 0, y: 26, scale: .99 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, amount: .14 }} transition={{ delay, duration: .52, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div>
+}
+
+function ProductCard({ product, index, onOpen, onInquiry, onCart }) {
+  const reduced = useReducedMotion()
   const price = product.price == null ? 'দাম জানতে যোগাযোগ করুন' : bnMoney(product.price)
   const eligible = product.purchaseMode === 'cart' && product.price != null
-  return <motion.article className="product-card" layout whileHover={{ y: -5 }} transition={{ duration: .22 }}>
+  return <motion.article className="product-card" layout initial={reduced ? false : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .08 }} whileHover={reduced ? {} : { y: -7 }} transition={{ delay: Math.min(index, 7) * .035, duration: .34 }}>
     <button className={`product-image ${product.id === 'freezy' ? 'poster' : ''}`} onClick={() => onOpen(product)} aria-label={`${product.name} বিস্তারিত দেখুন`}><img src={product.image} alt={product.name} loading="lazy" /></button>
     <div className="product-content">
       <span className="category-chip">{categoryLabel(product.category)}</span>
@@ -121,7 +142,7 @@ function ProductCollection({ onOpen, onInquiry, onCart }) {
       <Reveal className="section-heading"><div><span className="section-kicker">পণ্যের সংগ্রহ</span><h2>প্রয়োজনীয় পণ্য বেছে নিন</h2><p>ছবিতে দেখা প্যাক তথ্যের ভিত্তিতে সাজানো সংগ্রহ। মূল্য ও প্রাপ্যতা যোগাযোগ করে নিশ্চিত করুন।</p></div><div className="search-box"><Search size={19} /><input id="product-search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="পণ্যের নাম খুঁজুন" aria-label="পণ্যের নাম খুঁজুন" />{query && <button onClick={() => setQuery('')} aria-label="সার্চ মুছুন"><X size={17} /></button>}</div></Reveal>
       <div className="filter-row" aria-label="পণ্যের ক্যাটাগরি">{categories.map((item) => <button key={item.id} className={category === item.id ? 'active' : ''} onClick={() => choose(item.id)}>{item.label}</button>)}</div>
       <div className="results-meta"><span>{new Intl.NumberFormat('bn-BD').format(filtered.length)}টি পণ্য পাওয়া গেছে</span>{(query || category !== 'all') && <button onClick={() => { setQuery(''); setCategory('all') }}>সব দেখুন</button>}</div>
-      {filtered.length ? <motion.div className="product-grid" layout>{filtered.map((product) => <ProductCard key={product.id} product={product} onOpen={onOpen} onInquiry={onInquiry} onCart={onCart} />)}</motion.div> : <div className="empty-state"><Search size={30} /><h3>কোনো পণ্য পাওয়া যায়নি</h3><p>অন্য শব্দ লিখে দেখুন অথবা সব ফিল্টার মুছে দিন।</p><button className="btn btn-primary" onClick={() => { setQuery(''); setCategory('all') }}>সব পণ্য দেখুন</button></div>}
+      {filtered.length ? <motion.div className="product-grid" layout>{filtered.map((product, index) => <ProductCard key={product.id} product={product} index={index} onOpen={onOpen} onInquiry={onInquiry} onCart={onCart} />)}</motion.div> : <div className="empty-state"><Search size={30} /><h3>কোনো পণ্য পাওয়া যায়নি</h3><p>অন্য শব্দ লিখে দেখুন অথবা সব ফিল্টার মুছে দিন।</p><button className="btn btn-primary" onClick={() => { setQuery(''); setCategory('all') }}>সব পণ্য দেখুন</button></div>}
     </div>
   </section>
 }
@@ -213,7 +234,7 @@ function Storefront() {
   const addItem = (product, quantity = 1) => { add(product.id, quantity); setSelected(null); showNotice('পণ্যটি কার্টে যোগ হয়েছে।') }
   return <>
     <Header onCart={() => { setSelected(null); setCartOpen(true) }} />
-    <main><Hero /><ProductCollection onOpen={(p) => { setCartOpen(false); setSelected(p) }} onInquiry={inquiry} onCart={addItem} /><CareSection /><HowItWorks /><FAQ /><ContactSection /></main>
+    <main><Hero /><ServiceRibbon /><ProductCollection onOpen={(p) => { setCartOpen(false); setSelected(p) }} onInquiry={inquiry} onCart={addItem} /><CareSection /><HowItWorks /><FAQ /><ContactSection /></main>
     <Footer />
     <AnimatePresence>{selected && <ProductModal product={selected} onClose={() => setSelected(null)} onInquiry={inquiry} onAdd={addItem} />}</AnimatePresence>
     <AnimatePresence>{cartOpen && <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />}</AnimatePresence>
