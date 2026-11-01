@@ -72,7 +72,7 @@ function Hero() {
     <div className="hero-blob hero-blob-two" />
     <div className="container hero-grid">
       <motion.div className="hero-copy" initial="initial" animate="animate" transition={{ staggerChildren: .1 }}>
-        <motion.div {...item} className="eyebrow"><Sparkles size={15} /> PERSONAL CARE • BABY CARE • EVERYDAY ESSENTIALS</motion.div>
+        <motion.div {...item} className="eyebrow"><Sparkles size={15} /><span className="eyebrow-full">PERSONAL CARE • BABY CARE • EVERYDAY ESSENTIALS</span><span className="eyebrow-mobile">PERSONAL CARE • BABY CARE</span></motion.div>
         <motion.h1 {...item}>নিজের ও পরিবারের যত্নে,<br /><span>প্রয়োজনীয় পণ্য এক জায়গায়</span></motion.h1>
         <motion.p {...item}>ব্যক্তিগত পরিচর্যা, বেবি কেয়ার ও দৈনন্দিন প্রয়োজনের পণ্য দেখুন। বিস্তারিত জেনে সহজেই যোগাযোগ করুন।</motion.p>
         <motion.div {...item} className="hero-actions"><button className="btn btn-primary" onClick={() => scrollTo('products')}>পণ্য দেখুন <ArrowRight size={18} /></button><button className="btn btn-secondary" onClick={() => scrollTo('contact')}>যোগাযোগ করুন</button></motion.div>
