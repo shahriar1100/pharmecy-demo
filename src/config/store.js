@@ -1,6 +1,6 @@
 export const store = {
   name: 'নিউ ভূঁইয়া ফার্মেসী',
-  ownerName: 'ডাঃ গিয়াস উদ্দিন ভূঁইয়া মিঠু',
+  ownerName: 'Gram:Dr:Gias Uddin Bhuyan. (Mithu.)',
   phone: '01782-606086',
   phoneSecondary: '01812-991473',
   whatsapp: null,
